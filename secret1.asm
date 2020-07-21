@@ -84,13 +84,13 @@ endp isLetter
                 jne uppercase
                 add al, [key]
                 cmp al, 'z'
-                jb final
+                jbe final
                 sub al, 26
                 jmp final
                 uppercase:
                     add al, [key]
                     cmp al, 'Z'
-                    jb final
+                    jbe final
                     sub al, 26
                     final:
                         mov [si], al
