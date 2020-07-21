@@ -36,7 +36,7 @@ endp isLetter
         mov ax, @data
         mov ds, ax
         
-        
+        ; get key
         mov ah, 2
         mov dl, 'a'
         int 21h
@@ -49,12 +49,14 @@ endp isLetter
         mov [key], al
         sub [key], 'a'
         
+        ; new line
         mov ah, 2
         mov dl, 0Ah
         int 21h
         mov dl, 0Dh
         int 21h
         
+        ; get input
         mov ah, 9
         mov dx, offset enter_msg
         int 21h
@@ -65,15 +67,16 @@ endp isLetter
         mov [byte ptr bx], 21
         int 21h
         
+        ; encrypt
         xor cx, cx
         mov bx, offset message
         mov si, offset encrypted
         inc bx
-        mov cl, [bx]
+        mov cl, [bx] ; get message length
         encrypt:
             inc bx
             mov al, [bx]
-            call isLetter
+            call isLetter ; check whether uppercase, lowercase or not letter
             cmp [isLet], 0 ; no letter
             je final
             letter:
@@ -93,14 +96,16 @@ endp isLetter
                         mov [si], al
                         inc si
                         loop encrypt
-        mov [byte ptr si], '$'
+        mov [byte ptr si], '$' ; finish the message
         
+        ; new line
         mov ah, 2
         mov dl, 0Ah
         int 21h
         mov dl, 0Dh
         int 21h
         
+        ; print answer
         mov ah, 9
         mov dx, offset encrypted_msg
         int 21h
