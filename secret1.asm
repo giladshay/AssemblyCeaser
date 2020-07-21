@@ -4,8 +4,8 @@ STACK 100h
 
 DATASEG
     key db ?
-    message db 12 dup (?)
-    encrypted db 12 dup(?)
+    message db 23 dup (?)
+    encrypted db 23 dup(?)
     enter_msg db 'please type your message: $'
     encrypted_msg db 'the encrypted message is: $'
     
